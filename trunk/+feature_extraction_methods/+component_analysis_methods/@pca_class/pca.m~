@@ -1,0 +1,75 @@
+classdef pca < feature_extraction_methods.component_analysis
+       %Summary of PCA:
+    %   The PCA class controls the principal component analysis
+    %   process in NM2 framework. The PCA class inherit
+    %   belongs to the super class component analysis
+    %
+    %   PCA properties:
+    %   parameters - ...
+    %   model - ...
+    %   reports - ...
+    
+    %   PCA revision history:
+    %   Date of creation: 11 August 2016
+    %   First used in: NM2.0 beta (Helena)
+    %   Creator: Carlos Cabral
+    methods
+        function obj = pca(parameter,model,reports)
+            import feature_extraction_methods.*
+            import component_analysis.*
+            if nargin==0
+               %weights :data_type 'char' : dimension [1 Inf] : range
+               %{'none','variance','external'}:
+               %value : {none},no comment; example for a regular char
+               %parameter
+               %without dependencies on the data.
+               weights=parameters({'none'},'char',int16([1 Inf]),{'none','variance','external'});
+               
+               parameter=struct('weights',weights);
+               obj.parameters=parameters_eval(parameter);
+               
+               % getting the paramters descriptor
+               obj.parameter_descriptor=['weights-' weights.value{1}];
+               obj.model.transformation=[];
+               obj.model.component_weight=[];
+               obj.model.statistics=[];
+               obj.reports=report;
+            else
+                if (nargin==1)
+                    obj=filter_methods.pca();
+                    if isstruct(parameter)
+                        try rpt=parameters_checker(obj.parameters,parameter);
+                        catch err
+                            rethrow(err)
+                        end
+                        obj.parameter_descriptor=['weights-' parameter.weights.value{1}];
+                        if rpt.flag
+                            obj.parameters=parameter;
+                        else
+                            error('pca:Class_error','Error using pca \n Invalid parameters introduced.');
+                        end
+                    else
+                        error('pca:Class_error','Error using pca \n First input must (parameters) be a structure.');
+                    end
+                elseif (nargin==3)
+                    obj=filter_methods.pca(parameter);
+                    if ~isstruct(model)
+                        error('pca:Incompability_error','Error using pca \nSecond input (model) must be a structure.')
+                    else
+                        if ~(isfield(model,'transformation')&&isfield(model,'component_weight')&&isfield(model,'statist'))
+                            error('pca:Incompability_error','Error using pca \nSecond input (model) structure is invalid.')
+                        end
+                    end
+                    obj.model=model;
+                    if ~(sum(isreport(reports))>0)
+                        error('pca:Incompability_error','Error using pca \nThird (reports) must be a report class object.')
+                    else
+                        obj.reports=reports;
+                    end
+                else
+                    error('pca:Incompability_error','Invalid numer of arguments specified please read the pca class documentation.')
+                end
+            end
+        end
+    end
+end

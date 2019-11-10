@@ -1,0 +1,107 @@
+function rpt =compares(dict_true,dict_real)
+% COMPARES (dictionary class)
+%   report =COMPARES(dictionary_true,dictionary_real)
+%
+%   COMPARES (dictionary class) function receives two dictionary class
+%   elements and compares the input and output properies producing a report
+%   class element.
+
+%   See also dictionary,report.
+
+%   COMPARES (dictionary class) revision history:
+%   Date of creation: 09 May 2014 beta (Helena)
+%   Creator: Carlos Cabral
+
+
+if nargin>1
+    %% Overture: Input checking and mode definition
+    if ~isdictionary(dict_true)
+        error(['Undefined function '' compares (dictionary class) '' for first input argument of type ''' class(dict_true) ''' (First input argument must be a dictionary class element).']);
+    end
+    if ~isdictionary(dict_real)
+        error(['Undefined function '' compares (dictionary class) '' for second input argument of type ''' class(dict_real) ''' (Second input argument must be a dictionary class element).']);
+    end
+    %mode definition
+    if strcmp(dict_true.method,'method')
+        mode=1;
+    else
+        mode=0;
+    end
+    if mode==0
+        if ~strcmp(dict_real.method,dict_true.method)
+            error(['The dictionary method properties are not the same ('  dict_true.method ' and ' dict_real.method ').']);
+        end
+    end
+%% Act: Checking 
+
+    %dictionary property inputs
+    rpt_input_method='input';
+    rpt_input_flag=true;
+    rpt_input_sub=report();
+    rpt_input_descriptor='Report: ';
+    aux_real_input=dict_real.input;
+    if ~isempty(aux_real_input)
+        aux_true_input=dict_true.input;
+        aux_obj=fieldnames(aux_real_input);
+        if numel(aux_obj)~=numel(fieldnames(aux_true_input))
+            error('The dimension of the dictionary class input property element is not consistent with provided inputs.');
+        end
+        for j=1:numel(aux_obj)
+            aux_name=aux_obj{j};
+            if isfield(aux_true_input,aux_name)
+                if  ~strcmp(aux_real_input.(aux_name).data_type,aux_true_input.(aux_name).data_type)
+                    rpt_input_flag=false;
+                    rpt_input_descriptor=[rpt_input_descriptor '| The class of the input ' aux_name ' is not ' aux_true_input.(aux_name).data_type];
+                end
+                if sum(abs(aux_real_input.(aux_name).dimension-aux_true_input.(aux_name).dimension))~=0
+                    rpt_input_flag=false;
+                    rpt_input_descriptor=[rpt_input_descriptor '| The dimensions of the input ' aux_name ' ' num2str(obj_input.(aux_name)) ' are not in accordance with the dictionary class, ' num2str(aux_true_input.(aux_name).size)];
+                end
+            else
+                error(['The input field ' aux_name ' was not found in the dictionary class.']);
+            end
+        end
+    else
+        rpt_input_descriptor=[rpt_input_descriptor '| Input not defined'];
+    end
+    rpt_input=report(rpt_input_method,rpt_input_sub,rpt_input_flag,rpt_input_descriptor);
+    %dictionary property output
+    rpt_output_method='output';
+    rpt_output_flag=true;
+    rpt_output_sub=report();
+    rpt_output_descriptor='Report: ';
+    aux_real_output=dict_real.output;
+    if ~isempty(aux_real_output)
+        %dictionary property output
+        aux_dict_output=dict_.output;
+        aux_obj=fieldnames(obj_output);
+        if numel(aux_obj)~=numel(fieldnames(aux_dict_output))
+            error('The dimension of the dictionary class output property element is not consistent with provided outputs.');
+        end
+        for j=1:numel(aux_obj)
+            aux_name=aux_obj{j};
+            if isfield(aux_dict_output,aux_name)
+                if  ~strcmp(obj_output.(aux_name),aux_dict_output.(aux_name).data_type)
+                    rpt_output_flag=false;
+                    rpt_output_descriptor=[rpt_input_descriptor '| The class of the output ' aux_name ' is not ' aux_dict_output.(aux_name).data_type];
+                end
+                if sum(abs(obj_input.(aux_name)-aux_true_input.(aux_name).data_type.size))~=0
+                    rpt_output_flag=false;
+                    rpt_output_descriptor=[rpt_output_descriptor '| The dimensions of the output ' aux_name ' ' num2str(obj_output.(aux_name)) ' are not in accordance with the dictionary class, ' num2str(aux_dict_output.(aux_name).size)];
+                end
+            else
+                error(['The output field ' aux_name ' was not found in the dictionary class.']);
+            end
+        end
+    else
+        rpt_output_descriptor=[rpt_output_descriptor '| Output not defined'];
+    end
+    rpt_output=report(rpt_output_method,rpt_output_sub,rpt_output_flag,rpt_output_descriptor);
+    %% Finale: Assembles the Reports and decide the integrity flag value - 0 for false (data with consistency problems) 1 for true (data in agreement)
+    rpt_method=dict_real.descriptor;
+    rpt_sub=cat(1,rpt_input,rpt_output,rpt_warnings);
+    [rpt_flag,rpt_descriptor]=rpt_sub.flag_merger;
+    rpt=report(rpt_method,rpt_sub,rpt_flag,rpt_descriptor);
+else
+   error('Not enough arguments for function '' reporter (dictionary class). (less than 2 arguments provided)');
+end

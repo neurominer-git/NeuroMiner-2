@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<parameters_check>
+   <process>parameters_check</process>
+   <subprocesses_report>
+      <type>
+         <process>type</process>
+         <flag>1</flag>
+         <descriptor>correct</descriptor>
+      </type>
+      <target>
+         <process>target</process>
+         <flag>0</flag>
+         <descriptor>Wrong range</descriptor>
+      </target>
+   </subprocesses_report>
+   <flag>0</flag>
+   <descriptor>parameters_check target failed</descriptor>
+</parameters_check>

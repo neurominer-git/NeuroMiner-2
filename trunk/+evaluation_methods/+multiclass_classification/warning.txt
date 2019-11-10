@@ -1,0 +1,5 @@
+@knn
+@C_SVM_LIBSVM
+@nu_SVM_LIBSVM
+
+are soft links, if the locations is moved it means that the files need to be copied or the soft links upgraded.

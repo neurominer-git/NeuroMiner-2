@@ -1,0 +1,8 @@
+Evaluation
+    Uniformize the name of the fields in the model
+    Create a super class for evaluation?
+Filter Methods
+    Create a class for the cutt off structure?
+    Documentation improvment
+    Create method to introduce cutt off structure directly?
+    Introduce the checking of the target fields with the data.

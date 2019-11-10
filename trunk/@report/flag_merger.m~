@@ -1,0 +1,26 @@
+function rpt=flag_merger(rpt)
+% FLAG_MERGER (REPORT class)
+%   report_output =COMPARES(report_input)
+%
+%   FLAG_MERGER (report class) function receives a report class element and
+%   decides the flag and descriptor properties of this element based on the
+%   subprocesses and the existing flag and descriptor properties.
+
+%   See also report, isreport, io_compare.
+
+%   FLAG_MERGER (report class) revision history:
+%   Date of creation: 12 May 2014 beta (Helena)
+%   Creator: Carlos Cabral
+
+
+if nargin==1
+   subs=rpt.subprocesses_report;
+   aux_flag=rpt.flag;
+   for i=1:numel(subs)
+       aux_flag=aux_flag&&subs(i).flag;
+       if 
+   end
+else
+   error('Function '' flag_merger (report class) called with an invalid number of arguments. (1 argument should be provided)');
+end
+end

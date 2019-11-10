@@ -1,0 +1,50 @@
+Binary:
+
+accuracy (overall accuracy - on value) - done
+accuracy_class (class accuracy - number of classes) -done
+precision (overall accuracy - on value) -done
+recall (Sensitivity) (overall accuracy - on value) -done
+fscore (overall accuracy - on value) -done 
+specificity (overall accuracy - on value) -done 
+balanced accuracy (overall accuracy - on value) - done
+False Positive Rate (on value) - done 
+Geometric Mean (one value) -done
+AUC - done
+
+Multi-Class:
+
+accuracy (overall accuracy - one value) -done 
+accuracy_class (class accuracy - number of classes) -done 
+precision_class (class accuracy - number of classes) - done
+recall_class (Sensitivity) (class accuracy - number of classes) -done
+precision (one value) - done
+recall (Sensitivity) (one value) - done
+fscore (one value) - done
+
+Multi-labelled:
+
+Exact Match Ration
+Labelling Fscore
+Retrieval Fscore
+Hamming Loss
+
+Hierarchical:
+
+Precision subclass
+Recall subclass
+Fscore subclass
+Precision superclass
+Recall superclass
+Fscore superclass
+
+Regression:
+
+Mean_Squared_Error
+Mean_Absolute_Error
+Mean Average Error - done
+Correlation_Coeficient done
+R squared score
+Mean Standard Error - done
+Normalized Root of Mean Squared Deviation -done
+Root of Mean Squared Deviation - done
+Squared Correlation Coefficient - done
